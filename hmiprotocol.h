@@ -24,22 +24,14 @@ class HMIPROTOCOL_EXPORT HMIProtocol : public QObject
         explicit HMIProtocol(QObject *parent = nullptr);
         ~HMIProtocol();
 
-        enum Command : uint8_t
-        {
-            CMD_NONE = 0x00,
-            CMD_ALIVE = 0xA0,
-            CMD_LOGIN = 0xA1
-        };
+        void read(const QByteArray data);
+        void write(const uint8_t cmd, const QByteArray payload);
 
     signals:
-        void readyRead(const HMIProtocol::Command cmd, const QByteArray payload);
-        void readyWrite(const QByteArray data);
+        void readyRead(const uint8_t cmd, const QByteArray payload);
+        void readyWrite(const QByteArray package);
 
-    public slots:
-        void init();
-
-        void read(const QByteArray data);
-        void write(const HMIProtocol::Command cmd, const QByteArray payload);
+        void timeOut();
 
     private:
         // Paquete de datos
@@ -73,7 +65,7 @@ class HMIPROTOCOL_EXPORT HMIProtocol : public QObject
 
         typedef struct
         {
-            HMIProtocol::Command cmd;
+            uint8_t cmd;
             QByteArray payload;
         }package_t;
 

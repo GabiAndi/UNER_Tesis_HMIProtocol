@@ -3,32 +3,27 @@
 HMIProtocol::HMIProtocol(QObject *parent) :
     QObject{parent}
 {
+    // Estado
+    state = new state_t;
 
+    state->dataMaxLength = 1;
+    state->timeOutMs = 100;
+    state->data.clear();
+    state->readIndex = 0;
+    state->readState = ReadState::STATE_HEADER_BYTE1;
+    state->payloadLength = 0;
+
+    // Paquete de datos
+    package = new package_t;
+
+    package->cmd = 0x00;
+    package->payload.clear();
 }
 
 HMIProtocol::~HMIProtocol()
 {
     delete state;
     delete package;
-}
-
-void HMIProtocol::init()
-{
-    // Estado
-    state = new state_t;
-
-    state->dataMaxLength = 1;
-    state->timeOutMs = 100;
-
-    state->data.clear();
-
-    state->readIndex = 0;
-    state->readState = ReadState::STATE_HEADER_BYTE1;
-    state->payloadLength = 0;
-
-    // Paquete de datos
-    package->cmd = Command::CMD_NONE;
-    package->payload.clear();
 }
 
 void HMIProtocol::read(const QByteArray data)
@@ -141,7 +136,7 @@ void HMIProtocol::read(const QByteArray data)
 
             // Comando
             case ReadState::STATE_CMD:
-                package->cmd = (Command)(readByte);
+                package->cmd = readByte;
 
                 state->readState = ReadState::STATE_PAYLOAD;
 
@@ -177,13 +172,15 @@ void HMIProtocol::read(const QByteArray data)
     }
 }
 
-void HMIProtocol::write(const Command cmd, const QByteArray payload)
+void HMIProtocol::write(const uint8_t cmd, const QByteArray payload)
 {
     QByteArray data;
 
+    uint16_t payloadLength = payload.length();
+
     data.append(PROTOCOL_HEADER);
-    data.append((uint8_t)(payload.length()));
-    data.append((uint8_t)((payload.length() >> 8)));
+    data.append((uint8_t)(payloadLength));
+    data.append((uint8_t)((payloadLength >> 8)));
     data.append(cmd);
     data.append(payload);
 
@@ -194,13 +191,11 @@ void HMIProtocol::reset()
 {
     // Estado
     state->data.remove(0, state->readIndex);
-
     state->readIndex = 0;
     state->readState = ReadState::STATE_HEADER_BYTE1;
-
     state->payloadLength = 0;
 
     // Paquete
-    package->cmd = Command::CMD_NONE;
+    package->cmd = 0x00;
     package->payload.clear();
 }
