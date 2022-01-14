@@ -1,3 +1,12 @@
+/*************************************************************/
+/* AUTOR: GabiAndi                                           */
+/* FECHA: 14/01/2022                                         */
+/*                                                           */
+/* DESCRIPCION:                                              */
+/* Encabezado automático que añade opciones al compilador    */
+/* dependiendo la plataforma de destino.                     */
+/*************************************************************/
+
 #ifndef HMIPROTOCOL_GLOBAL_H
 #define HMIPROTOCOL_GLOBAL_H
 

@@ -3,7 +3,7 @@
 HMIProtocol::HMIProtocol(QObject *parent) :
     QObject{parent}
 {
-    // Estado
+    // Estado del analisis
     state = new state_t;
 
     state->dataMaxLength = 1;
@@ -18,12 +18,21 @@ HMIProtocol::HMIProtocol(QObject *parent) :
 
     package->cmd = 0x00;
     package->payload.clear();
+
+    // Timer
+    timer = new QTimer(this);
+
+    timer->setSingleShot(true);
+
+    connect(timer, &QTimer::timeout, this, &HMIProtocol::reset);
 }
 
 HMIProtocol::~HMIProtocol()
 {
+    // Eliminamos la memoria
     delete state;
     delete package;
+    delete timer;
 }
 
 void HMIProtocol::read(const QByteArray data)
@@ -50,7 +59,8 @@ void HMIProtocol::read(const QByteArray data)
             case ReadState::STATE_HEADER_BYTE1:
                 if (readByte == PROTOCOL_HEADER.at(STATE_HEADER_BYTE1))
                 {
-                    QTimer::singleShot(state->timeOutMs, this, &HMIProtocol::reset);
+                    // Disparo del timer de time out
+                    timer->start(state->timeOutMs);
 
                     state->readState = ReadState::STATE_HEADER_BYTE2;
                 }
@@ -174,6 +184,7 @@ void HMIProtocol::read(const QByteArray data)
 
 void HMIProtocol::write(const uint8_t cmd, const QByteArray payload)
 {
+    // Preparamos el comando y el payload en un paquete entero
     QByteArray data;
 
     uint16_t payloadLength = payload.length();
@@ -189,6 +200,9 @@ void HMIProtocol::write(const uint8_t cmd, const QByteArray payload)
 
 void HMIProtocol::reset()
 {
+    // Detenemos el timer
+    timer->stop();
+
     // Estado
     state->data.remove(0, state->readIndex);
     state->readIndex = 0;

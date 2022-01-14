@@ -1,6 +1,6 @@
 /*************************************************************/
 /* AUTOR: GabiAndi                                           */
-/* FECHA: 11/10/2021                                         */
+/* FECHA: 14/01/2022                                         */
 /*                                                           */
 /* DESCRIPCION:                                              */
 /* Gestiona el protocolo de comunicacion desarrollado para   */
@@ -68,6 +68,8 @@ class HMIPROTOCOL_EXPORT HMIProtocol : public QObject
             uint8_t cmd;
             QByteArray payload;
         }package_t;
+
+        QTimer *timer = nullptr;
 
         state_t *state = nullptr;
 
