@@ -17,6 +17,7 @@ set(PROJECT_SOURCES
     HMIProtocol_global.h
     hmiprotocol.cpp
     hmiprotocol.h
+    hmiprotocoldata.h
 )
 
 add_library(${PROJECT_NAME} STATIC ${PROJECT_SOURCES})
