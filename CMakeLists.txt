@@ -13,14 +13,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 COMPONENTS Core REQUIRED)
 
-set(PROJECT_SOURCES
-    HMIProtocol_global.h
-    hmiprotocol.cpp
-    hmiprotocol.h
-    hmiprotocoldata.h
+add_library(${PROJECT_NAME}
+    STATIC
+        "HMIProtocol_global.h"
+        "hmiprotocol.cpp"
+        "hmiprotocol.h"
+        "hmiprotocoldata.h"
 )
-
-add_library(${PROJECT_NAME} STATIC ${PROJECT_SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)
 
