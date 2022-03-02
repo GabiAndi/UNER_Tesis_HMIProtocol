@@ -30,6 +30,8 @@ namespace hmiprotocoldata
         REQUEST_GET_PARAM = GET_PARAM,
         SET_PARAM = 0x50,
         REQUEST_SET_PARAM = SET_PARAM,
+        INIT_SYSTEM = 0x80,
+        STOP_SYSTEM = 0x81,
         KEEP_ALIVE = 0xA0,
         LOGIN = 0xA1,
         FORCE_LOGIN = 0xA2,
@@ -55,6 +57,12 @@ namespace hmiprotocoldata
     {
         REPLY = 0x00,
         REQUEST = 0xFF
+    };
+
+    enum Request : uint8_t
+    {
+        REQUEST_ERROR = 0x00,
+        REQUEST_OK = 0xFF
     };
 
     enum LoginRequest : uint8_t
