@@ -26,12 +26,14 @@ namespace hmiprotocoldata
 
     enum Command : uint8_t
     {
-        GET_PARAM = 0x00,
-        REQUEST_GET_PARAM = GET_PARAM,
-        SET_PARAM = 0x50,
-        REQUEST_SET_PARAM = SET_PARAM,
-        INIT_SYSTEM = 0x80,
-        STOP_SYSTEM = 0x81,
+        GET_SENSOR = 0x00,
+        REQUEST_GET_SENSOR = GET_SENSOR,
+        SET_SENSOR = 0x01,
+        REQUEST_SET_SENSOR = SET_SENSOR,
+        GET_STATE = 0x50,
+        REQUEST_GET_STATE = GET_STATE,
+        SET_STATE = 0x51,
+        REQUEST_SET_STATE = SET_STATE,
         KEEP_ALIVE = 0xA0,
         LOGIN = 0xA1,
         FORCE_LOGIN = 0xA2,
@@ -51,6 +53,13 @@ namespace hmiprotocoldata
         SENSOR_MOTOR_VOLTAJE = 0x11,
         SENSOR_MOTOR_TEMP = 0x12,
         SENSOR_MOTOR_VELOCITY = 0x13,
+    };
+
+    enum State :uint8_t
+    {
+        INIT_SYSTEM = 0x00,
+        STOP_SYSTEM = 0x01,
+        SET_SETPOINT_OD = 0x02,
     };
 
     enum KeepAliveMode : uint8_t
