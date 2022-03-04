@@ -9,7 +9,7 @@
 #ifndef HMIPROTOCOLDATA_H
 #define HMIPROTOCOLDATA_H
 
-#include <QObject>
+#include <inttypes.h>
 
 namespace hmiprotocoldata
 {
@@ -27,13 +27,13 @@ namespace hmiprotocoldata
     enum Command : uint8_t
     {
         GET_SENSOR = 0x00,
-        REQUEST_GET_SENSOR = GET_SENSOR,
-        SET_SENSOR = 0x01,
-        REQUEST_SET_SENSOR = SET_SENSOR,
-        GET_STATE = 0x50,
-        REQUEST_GET_STATE = GET_STATE,
-        SET_STATE = 0x51,
-        REQUEST_SET_STATE = SET_STATE,
+        REQUEST_GET_SENSOR = 0x01,
+        SET_SENSOR = 0x10,
+        REQUEST_SET_SENSOR = 0x11,
+        GET_SYSTEM_STATE = 0x20,
+        REQUEST_GET_SYSTEM_STATE = 0x21,
+        SET_SYSTEM_STATE = 0x30,
+        REQUEST_SET_SYSTEM_STATE = 0x31,
         KEEP_ALIVE = 0xA0,
         LOGIN = 0xA1,
         FORCE_LOGIN = 0xA2,
@@ -55,11 +55,10 @@ namespace hmiprotocoldata
         SENSOR_MOTOR_VELOCITY = 0x13,
     };
 
-    enum State :uint8_t
+    enum SystemState :uint8_t
     {
-        INIT_SYSTEM = 0x00,
-        STOP_SYSTEM = 0x01,
-        SET_SETPOINT_OD = 0x02,
+        CONTROL_SYSTEM = 0x00,
+        SETPOINT_OD,
     };
 
     enum KeepAliveMode : uint8_t
