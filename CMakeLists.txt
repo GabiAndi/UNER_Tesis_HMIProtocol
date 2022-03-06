@@ -25,4 +25,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE HMIPROTOCOL_LIBRARY)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_LIST_DIR}")
