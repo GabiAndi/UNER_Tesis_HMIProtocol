@@ -27,13 +27,13 @@ namespace hmiprotocoldata
     enum Command : uint8_t
     {
         GET_SENSOR = 0x00,
-        REQUEST_GET_SENSOR = 0x01,
+        REQUEST_GET_SENSOR,
         SET_SENSOR = 0x10,
-        REQUEST_SET_SENSOR = 0x11,
+        REQUEST_SET_SENSOR,
         GET_SYSTEM_STATE = 0x20,
-        REQUEST_GET_SYSTEM_STATE = 0x21,
+        REQUEST_GET_SYSTEM_STATE,
         SET_SYSTEM_STATE = 0x30,
-        REQUEST_SET_SYSTEM_STATE = 0x31,
+        REQUEST_SET_SYSTEM_STATE,
         KEEP_ALIVE = 0xA0,
         LOGIN = 0xA1,
         FORCE_LOGIN = 0xA2,
@@ -44,21 +44,28 @@ namespace hmiprotocoldata
     enum Sensor : uint8_t
     {
         SENSOR_LV_FOSO = 0x00,
-        SENSOR_LV_LODO = 0x01,
-        SENSOR_TEMP = 0x02,
-        SENSOR_OD = 0x03,
-        SENSOR_PH_ANOX = 0x04,
-        SENSOR_PH_AIREACION = 0x05,
+        SENSOR_LV_LODO,
+        SENSOR_TEMP,
+        SENSOR_OD,
+        SENSOR_PH_ANOX,
+        SENSOR_PH_AIREACION,
         SENSOR_MOTOR_CURRENT = 0x10,
-        SENSOR_MOTOR_VOLTAJE = 0x11,
-        SENSOR_MOTOR_TEMP = 0x12,
-        SENSOR_MOTOR_VELOCITY = 0x13,
+        SENSOR_MOTOR_VOLTAJE,
+        SENSOR_MOTOR_TEMP,
+        SENSOR_MOTOR_VELOCITY,
     };
 
     enum SystemState :uint8_t
     {
         CONTROL_SYSTEM = 0x00,
         SETPOINT_OD,
+        PID_ERROR,
+        PID_KP,
+        PID_RPM_KP,
+        PID_KD,
+        PID_RPM_KD,
+        PID_KI,
+        PID_RPM_KI,
     };
 
     enum KeepAliveMode : uint8_t
